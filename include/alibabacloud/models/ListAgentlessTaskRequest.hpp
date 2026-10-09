@@ -2,6 +2,7 @@
 #ifndef ALIBABACLOUD_MODELS_LISTAGENTLESSTASKREQUEST_HPP_
 #define ALIBABACLOUD_MODELS_LISTAGENTLESSTASKREQUEST_HPP_
 #include <darabonba/Core.hpp>
+#include <vector>
 using namespace std;
 using json = nlohmann::json;
 namespace AlibabaCloud
@@ -27,6 +28,7 @@ namespace Models
       DARABONBA_PTR_TO_JSON(TargetName, targetName_);
       DARABONBA_PTR_TO_JSON(TargetType, targetType_);
       DARABONBA_PTR_TO_JSON(TaskId, taskId_);
+      DARABONBA_PTR_TO_JSON(TaskIdList, taskIdList_);
       DARABONBA_PTR_TO_JSON(Uuid, uuid_);
     };
     friend void from_json(const Darabonba::Json& j, ListAgentlessTaskRequest& obj) { 
@@ -44,6 +46,7 @@ namespace Models
       DARABONBA_PTR_FROM_JSON(TargetName, targetName_);
       DARABONBA_PTR_FROM_JSON(TargetType, targetType_);
       DARABONBA_PTR_FROM_JSON(TaskId, taskId_);
+      DARABONBA_PTR_FROM_JSON(TaskIdList, taskIdList_);
       DARABONBA_PTR_FROM_JSON(Uuid, uuid_);
     };
     ListAgentlessTaskRequest() = default ;
@@ -60,7 +63,7 @@ namespace Models
     virtual bool empty() const override { return this->currentPage_ == nullptr
         && this->endTime_ == nullptr && this->internetIp_ == nullptr && this->intranetIp_ == nullptr && this->lang_ == nullptr && this->machineName_ == nullptr
         && this->pageSize_ == nullptr && this->rootTask_ == nullptr && this->rootTaskId_ == nullptr && this->startTime_ == nullptr && this->status_ == nullptr
-        && this->targetName_ == nullptr && this->targetType_ == nullptr && this->taskId_ == nullptr && this->uuid_ == nullptr; };
+        && this->targetName_ == nullptr && this->targetType_ == nullptr && this->taskId_ == nullptr && this->taskIdList_ == nullptr && this->uuid_ == nullptr; };
     // currentPage Field Functions 
     bool hasCurrentPage() const { return this->currentPage_ != nullptr;};
     void deleteCurrentPage() { this->currentPage_ = nullptr;};
@@ -159,6 +162,15 @@ namespace Models
     inline ListAgentlessTaskRequest& setTaskId(string taskId) { DARABONBA_PTR_SET_VALUE(taskId_, taskId) };
 
 
+    // taskIdList Field Functions 
+    bool hasTaskIdList() const { return this->taskIdList_ != nullptr;};
+    void deleteTaskIdList() { this->taskIdList_ = nullptr;};
+    inline const vector<string> & getTaskIdList() const { DARABONBA_PTR_GET_CONST(taskIdList_, vector<string>) };
+    inline vector<string> getTaskIdList() { DARABONBA_PTR_GET(taskIdList_, vector<string>) };
+    inline ListAgentlessTaskRequest& setTaskIdList(const vector<string> & taskIdList) { DARABONBA_PTR_SET_VALUE(taskIdList_, taskIdList) };
+    inline ListAgentlessTaskRequest& setTaskIdList(vector<string> && taskIdList) { DARABONBA_PTR_SET_RVALUE(taskIdList_, taskIdList) };
+
+
     // uuid Field Functions 
     bool hasUuid() const { return this->uuid_ != nullptr;};
     void deleteUuid() { this->uuid_ = nullptr;};
@@ -167,7 +179,7 @@ namespace Models
 
 
   protected:
-    // The page number of the current page in a paged query. This parameter implements paging.
+    // The page number of the current page in a paging query.
     shared_ptr<int32_t> currentPage_ {};
     // The timestamp of the end time.
     shared_ptr<int64_t> endTime_ {};
@@ -182,33 +194,35 @@ namespace Models
     shared_ptr<string> lang_ {};
     // The name of the instance.
     shared_ptr<string> machineName_ {};
-    // The maximum number of entries per page in a paged query. This parameter implements paging.
+    // The maximum number of entries to return per page in a paging query.
     shared_ptr<int32_t> pageSize_ {};
     // Specifies whether to query the root task list. Valid values:
     // 
-    // - **true**: Root tasks.
-    // - **false**: Subtasks.
+    // - **true**: Queries root tasks.
+    // - **false**: Queries subtasks.
     shared_ptr<bool> rootTask_ {};
     // The ID of the root task.
     shared_ptr<string> rootTaskId_ {};
     // The timestamp of the start time.
     shared_ptr<int64_t> startTime_ {};
-    // The detection status. Valid values:
+    // The status of the detection task. Valid values:
     // 
-    // - **1**: Detecting.
-    // - **2**: Completed.
-    // - **3**: Failed.
-    // - **4**: Timed out.
+    // - **1**: running
+    // - **2**: completed
+    // - **3**: failed
+    // - **4**: timed out
     shared_ptr<int32_t> status_ {};
-    // The name of the detection target.
+    // The name of the scan target.
     shared_ptr<string> targetName_ {};
-    // The scan object type. Valid values:
+    // The object type of the scan. Valid values:
     // 
     // - **1**: snapshot 
     // - **2**: image
     shared_ptr<int32_t> targetType_ {};
-    // The ID of the root task. Specify this parameter to query the subtask list of a root task.
+    // The ID of the root task. Specify this parameter when you query the list of subtasks under a root task.
     shared_ptr<string> taskId_ {};
+    // The list of task IDs to return. You can specify up to 100 IDs. You must specify RootTask and cannot specify this parameter together with TaskId. If RootTask is set to true, root tasks are queried. If RootTask is set to false, subtasks are queried, and cross-root task queries are allowed. If RootTaskId is specified, the intersection is returned.
+    shared_ptr<vector<string>> taskIdList_ {};
     // The UUID of the server to query.
     shared_ptr<string> uuid_ {};
   };
